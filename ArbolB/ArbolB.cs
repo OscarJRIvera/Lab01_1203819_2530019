@@ -16,19 +16,6 @@ namespace ArbolB
             this.comparador = Funcomparador;// el apuntador de la linea 12 que apunte a la funcion. 
         }
 
-        public bool IsEmpty()
-        {
-            if (root == null)
-            {
-                return true;
-            }
-            else if (root.IsEmpy())
-            {
-                return true;
-            }
-            return false;
-        }
-
         public void Add(T dato)
         {
 
