@@ -6,26 +6,35 @@ namespace ArbolB
 {
     class Node<T>
     {
-        internal NodosInternos<T>[] nodosInternos;       
-        private int n;
+        internal NodosInternos<T>[] nodosInternos;
         private ArbolB<T>.Comparador<T> comparador;
+        
+        
 
         public Node(int n, ArbolB<T>.Comparador<T> comparador)
         {
-            this.n = n;
+            nodosInternos = new NodosInternos<T>[n];
             this.comparador = comparador;
         }
+        public void empty()
+        {
+            for (int x = 0; x < nodosInternos.Length; x++)
+            {
+                nodosInternos[x] = null;
+            }
+        }
+
 
         public bool IsEmpy()
         {
-            foreach (var item in nodosInternos)
+            if (nodosInternos[0] == null)
             {
-                if (item!=null)
-                {
-                    return false; //osea que no esta vacío
-                }
+                return true;
             }
-            return true;
+            else
+            {
+               return false;
+            }
         }
         public void AddValue(T value)
         {
@@ -48,18 +57,51 @@ namespace ArbolB
                     Value = value
                 };
             }
+
+            CorrectOrder();
+        }
+        public void AddValue2(NodosInternos<T> value)
+        {
+            if (IsEmpy())
+            {
+                nodosInternos[0] = new NodosInternos<T>();
+                nodosInternos[0] = value;
+              
+            }
+            else
+            {
+                int i = 0;
+                while (nodosInternos[i] != null)
+                {
+                    i++;
+                }
+                nodosInternos[i] = new NodosInternos<T>();
+                nodosInternos[i] = value;
+            }
+
+            CorrectOrder();
         }
         public void CorrectOrder()
         {
-            for (int i = 0; i < nodosInternos.Length -1 ; i++)
+            int length=0;
+            for (int x=0; x<nodosInternos.Length;x++)
             {
-                for (int j = i + 1; j < nodosInternos.Length; j++)
+                if (nodosInternos[length] != null)
+                {
+                    length++;
+                }
+
+
+            }
+            for (int i = 0; i < length - 1 ; i++)
+            {
+                for (int j = i + 1; j < length; j++)
                 {
                     if(comparador.Invoke(nodosInternos[i].Value,nodosInternos[j].Value) > 0)
                     {
-                        var t = nodosInternos[i].Value;
-                        nodosInternos[i].Value = nodosInternos[j].Value;
-                        nodosInternos[j].Value = t;
+                        var t = nodosInternos[i];
+                        nodosInternos[i] = nodosInternos[j];
+                        nodosInternos[j] = t;
                     }
                 }
             }
@@ -74,6 +116,26 @@ namespace ArbolB
                 }
             }
             return true;
+        }
+        public bool IsFull2()
+        {
+            int x = 0;
+            foreach (var item in nodosInternos)
+            {
+                if (item != null)
+                {
+                    x++;
+                }
+            }
+            if (x == (nodosInternos.Length - 1))
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool tienehijos()
+        {
+            return nodosInternos[0].Left != null;
         }
       
     }
