@@ -15,7 +15,10 @@ namespace ArbolB
             this.n = n;
             this.comparador = Funcomparador;// el apuntador de la linea 12 que apunte a la funcion. 
         }
-
+        public void Empty()
+        {
+            root = null;
+        }
         public bool IsEmpty()
         {
             if (root == null)
@@ -31,7 +34,6 @@ namespace ArbolB
 
         public void Add(T dato)
         {
-
             if (root == null)
             {
                 root = new Node<T>(n, comparador);
@@ -39,124 +41,52 @@ namespace ArbolB
             }
             else
             {
-                add2(dato, root, null);
-            }
-
-        }
-        private void add2(T dato, Node<T> Actual, Node<T> AnteriorActual)
-        {
-            if (find(dato, Actual) == false)
-            {
-                if (Actual.IsFull())
+                if (root.IsFull())
                 {
-                    if (Actual.tienehijos())
+                    NodosInternos<T>[] aux = new NodosInternos<T>[n];
+                    int k = 0;
+                    foreach (var item in root.nodosInternos)
                     {
-                        int i = 0;
-                        while (Actual.nodosInternos[i].Value != null)
+                        aux[k] = item;
+                        k++;
+                    }
+                    aux[k] = new NodosInternos<T>
+                    {
+                        Value = dato
+                    };
+                    for (int i = 0; i < aux.Length - 1; i++)
+                    {
+                        for (int j = i + 1; j < aux.Length; j++)
                         {
-                            if (comparador.Invoke(dato, Actual.nodosInternos[i].Value) == -1)
+                            if (comparador.Invoke(aux[i].Value, aux[j].Value) > 0)
                             {
-                                add2(dato, Actual.nodosInternos[i].Left, Actual);
+                                var t = aux[i].Value;
+                                aux[i].Value = aux[j].Value;
+                                aux[j].Value = t;
                             }
-
-                            if (Actual.nodosInternos[i + 1] == null)
-                            {
-                                add2(dato, Actual.nodosInternos[i].Right, Actual);
-                            }
-                            i++;
                         }
                     }
-                    else
-                    {
-                        if (AnteriorActual == null)
-                        {
-                            Node<T> aux = new Node<T>(n + 1, comparador);
-                            int k = 0;
-                            foreach (var item in Actual.nodosInternos)
-                            {
-                                aux.nodosInternos[k] = item;
-                                k++;
-                            }
-                            aux.AddValue(dato);
-                            Node<T> Left = new Node<T>(n, comparador);
-                            Node<T> Right = new Node<T>(n, comparador);
-                            Node<T> Tempactual = new Node<T>(n, comparador);
-                            Tempactual = Actual;
-                            Actual = new Node<T>(n, comparador);
-                            Actual.AddValue(Divide(aux, ref Left, ref Right));
-                            Actual.nodosInternos[0].Left = Left;
-                            Actual.nodosInternos[0].Right = Right;
-                        }
-
-                    }
+                    Node<T> left = new Node<T>(n, comparador);
+                    Node<T> right = new Node<T>(n, comparador);
                 }
                 else
                 {
-                    Actual.AddValue(dato);
-                    if (Actual.tienehijos())
-                    {
-
-                    }
+                    root.AddValue(dato);
                 }
             }
-
         }
-        internal T Divide(Node<T> arr, ref Node<T> left, ref Node<T> right)
+        internal T Divide(NodosInternos<T>[] arr, ref Node<T> left, ref Node<T> right)
         {
-            for (int i = 0; i < arr.nodosInternos.Length / 2; i++)
+            for (int i = 0; i < arr.Length/2; i++)
             {
-                left.AddValue(arr.nodosInternos[i].Value);
+                left.AddValue(arr[i].Value);
             }
-            for (int i = arr.nodosInternos.Length / 2 + 1; i < arr.nodosInternos.Length; i++)
+            for (int i = arr.Length / 2 + 1; i < arr.Length ; i++)
             {
-                right.AddValue(arr.nodosInternos[i].Value);
+                right.AddValue(arr[i].Value);
             }
-            return arr.nodosInternos[arr.nodosInternos.Length / 2].Value;
+            return arr[arr.Length / 2].Value;
         }
-        internal T ValorEnMedio(Node<T> arr)
-        {
-            return arr.nodosInternos[arr.nodosInternos.Length / 2].Value;
-        }
-        private bool find(T dato, Node<T> Actual)
-        {
-            if (Actual.tienehijos())
-            {
-                int i = 0;
-                while (Actual.nodosInternos[i].Value != null)
-                {
-                    if (comparador.Invoke(dato, Actual.nodosInternos[i].Value) == 0)
-                    {
-                        return true;
-                    }
-                    else if (comparador.Invoke(dato, Actual.nodosInternos[i].Value) == -1)
-                    {
-                        find(dato, Actual.nodosInternos[i].Left);
-                    }
-                    else if (Actual.nodosInternos[i + 1] == null)
-                    {
-                        find(dato, Actual.nodosInternos[i].Right);
-                    }
-                    i++;
-                }
-                return false;
-            }
-            else
-            {
-                for (int x = 0; x < n - 1; x++)
-                {
-                    if (Actual.nodosInternos[x] != null)
-                    {
-                        if (comparador.Invoke(dato, Actual.nodosInternos[x].Value) == 0)
-                        {
-                            return true;
-                        }
-                    }
-
-
-                }
-                return false;
-            }
-        }
-
+        
     }
 }

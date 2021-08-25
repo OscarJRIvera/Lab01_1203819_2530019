@@ -6,9 +6,10 @@ namespace ArbolB
 {
     class NodosInternos<T>
     {
-        public T Value;
+            public T Value;
 
-        public Node<T> Left;
-        public Node<T> Right;
+            public Node<T> Left;
+            public Node<T> Right;
+        
     }
 }

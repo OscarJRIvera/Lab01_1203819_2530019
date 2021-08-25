@@ -6,25 +6,26 @@ namespace ArbolB
 {
     class Node<T>
     {
-        internal NodosInternos<T>[] nodosInternos;
+        internal NodosInternos<T>[] nodosInternos;       
+        private int n;
         private ArbolB<T>.Comparador<T> comparador;
 
         public Node(int n, ArbolB<T>.Comparador<T> comparador)
         {
-            nodosInternos = new NodosInternos<T>[n - 1];
+            this.n = n;
             this.comparador = comparador;
         }
 
         public bool IsEmpy()
         {
-            if (nodosInternos[0] == null)
+            foreach (var item in nodosInternos)
             {
-                return true;
+                if (item!=null)
+                {
+                    return false; //osea que no esta vacío
+                }
             }
-            else
-            {
-                return false;
-            }
+            return true;
         }
         public void AddValue(T value)
         {
@@ -47,26 +48,14 @@ namespace ArbolB
                     Value = value
                 };
             }
-
-            CorrectOrder();
         }
         public void CorrectOrder()
         {
-            int length = 0;
-            for (int x = 0; x < nodosInternos.Length; x++)
+            for (int i = 0; i < nodosInternos.Length -1 ; i++)
             {
-                if (nodosInternos[length] != null)
+                for (int j = i + 1; j < nodosInternos.Length; j++)
                 {
-                    length++;
-                }
-
-
-            }
-            for (int i = 0; i < length - 1; i++)
-            {
-                for (int j = i + 1; j < length; j++)
-                {
-                    if (comparador.Invoke(nodosInternos[i].Value, nodosInternos[j].Value) > 0)
+                    if(comparador.Invoke(nodosInternos[i].Value,nodosInternos[j].Value) > 0)
                     {
                         var t = nodosInternos[i].Value;
                         nodosInternos[i].Value = nodosInternos[j].Value;
@@ -81,16 +70,12 @@ namespace ArbolB
             {
                 if (item == null)
                 {
-                    return false;
+                    return false; 
                 }
             }
             return true;
         }
-        public bool tienehijos()
-        {
-            return nodosInternos[0].Left != null;
-        }
-
+      
     }
 
 
