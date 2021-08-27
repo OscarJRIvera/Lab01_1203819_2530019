@@ -137,7 +137,19 @@ namespace ArbolB
         {
             return nodosInternos[0].Left != null;
         }
-      
+        public int valueslength()
+        {
+            int x = 0;
+            for (int i = 0; i < nodosInternos.Length; i++)
+            {
+                if (nodosInternos[i] != null)
+                {
+                    x++;
+                }
+            }
+            return x;
+        }
+
     }
 
 

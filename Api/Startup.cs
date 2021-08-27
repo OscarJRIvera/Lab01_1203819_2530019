@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Api.Data;
 
 namespace Api
 {
@@ -26,6 +28,12 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //services.AddDbContext<ApiContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("ApiContext")));
+
+            services.AddDbContext<ApiContext>(options =>
+                    options.UseInMemoryDatabase("temp"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

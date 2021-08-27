@@ -6,6 +6,7 @@ namespace ArbolB
 {
     public class ArbolB<T>
     {
+        public List<T> pre = new List<T>();
         public bool ValorRepitodo;
         public bool valoringresado;
         internal Node<T> root;
@@ -16,6 +17,22 @@ namespace ArbolB
         {
             this.n = n;
             this.comparador = Funcomparador;// el apuntador de la linea 12 que apunte a la funcion. 
+        }
+        public List<T> Recorridos(int x)
+        {
+            if (x == 1)
+            {
+                Preorder(root);
+            }
+            else if (x == 2)
+            {
+                inorder(root);
+            }
+            else
+            {
+               postorder(root);
+            }
+            return pre;
         }
      
         public bool IsEmpty()
@@ -224,6 +241,81 @@ namespace ArbolB
                 }
             }
             
+        }
+        internal void recorridohoja(Node<T> Actual)
+        {
+            for (int i = 0; i < Actual.valueslength(); i++)
+            {
+                pre.Add(Actual.nodosInternos[i].Value);
+            }
+        }
+        internal void postorder(Node<T> Actual)
+        {
+            for (int i = 0; i < Actual.valueslength(); i++)
+            {
+                if (Actual.tienehijos())
+                {
+                    if (i == 0)
+                    {
+                        postorder(Actual.nodosInternos[i].Left);
+                    }
+                    postorder(Actual.nodosInternos[i].Right);
+                    pre.Add(Actual.nodosInternos[i].Value);
+                }
+                else
+                {
+                    recorridohoja(Actual);
+                    i = Actual.valueslength();
+                }
+            }
+        }
+        internal void inorder(Node<T> Actual)
+        {
+            for (int i = 0; i < Actual.valueslength(); i++)
+            {
+                if (Actual.tienehijos())
+                {
+                    if (i == 0)
+                    {
+                        inorder(Actual.nodosInternos[i].Left);
+                    }
+                    pre.Add(Actual.nodosInternos[i].Value);
+                    inorder(Actual.nodosInternos[i].Right);
+
+                }
+                else
+                {
+                    recorridohoja(Actual);
+                    i = Actual.valueslength();
+                }
+            }
+        }
+        internal void Preorder(Node<T> Actual)
+        {
+            for (int i = 0; i < Actual.valueslength(); i++)
+            {
+                if (!Actual.tienehijos())
+                {
+                    recorridohoja(Actual);
+                    i = Actual.valueslength();
+                }
+                else
+                {
+                    pre.Add(Actual.nodosInternos[i].Value);
+                    if (i == 0)
+                    {
+
+                        Preorder(Actual.nodosInternos[i].Left);
+                        Preorder(Actual.nodosInternos[i].Right);
+                    }
+                    else
+                    {
+                        Preorder(Actual.nodosInternos[i].Right);
+                    }
+                }
+
+
+            }
         }
 
     }
