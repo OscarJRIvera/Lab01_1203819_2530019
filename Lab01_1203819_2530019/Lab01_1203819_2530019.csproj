@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Api\Api.csproj" />
     <ProjectReference Include="..\ArbolB\ArbolB.csproj" />
   </ItemGroup>
 
