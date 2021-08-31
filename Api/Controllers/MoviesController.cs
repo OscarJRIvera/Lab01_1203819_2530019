@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,9 +18,9 @@ namespace Api.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-
-
-
+        
+        
+           
         private readonly Models.Data.Singleton F = Models.Data.Singleton.Instance;
         private readonly ApiContext _context;
 
@@ -31,38 +31,28 @@ namespace Api.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovie()
+        public string Get()
         {
-            return await _context.Movie.ToListAsync();
+            string xd = "Lab01";
+
+            return xd;
         }
 
-        //// GET: api/Movies/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Movie>> GetMovie(string id)
-        //{
-        //    var movie = await _context.Movie.FindAsync(id);
-
-        //    if (movie == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return movie;
-        //}
+     
         [HttpGet("{tranversal}")]
         public IEnumerable<Movie> Recorridos([FromRoute] string tranversal)
         {
             if (!F.Arbolb.IsEmpty())
             {
-                if (tranversal == "preorden")
+                if (tranversal == "preorder")
                 {
                     return F.Arbolb.Recorridos(1);
                 }
-                else if (tranversal == "inorden")
+                else if (tranversal == "inorder")
                 {
                     return F.Arbolb.Recorridos(2);
                 }
-                else if (tranversal == "postorden")
+                else if (tranversal == "postorder")
                 {
                     return F.Arbolb.Recorridos(3);
                 }
@@ -92,7 +82,7 @@ namespace Api.Controllers
             {
                 return BadRequest(error.Message);
             }
-
+           
         }
 
 
@@ -112,7 +102,7 @@ namespace Api.Controllers
                 {
                     return BadRequest("Numero debe ser impar");
                 }
-
+                
             }
             catch (Exception error)
             {
@@ -122,14 +112,14 @@ namespace Api.Controllers
 
 
         }
-        [HttpPost("populate")]
-        public async Task<ActionResult> Create([FromForm] IFormFile file)
+        [HttpPost("import")] // para mandar archivo json
+        public async Task<ActionResult> Create([FromForm] IFormFile File)
         {
             try
             {
                 List<Movie> listapeli = new List<Movie>();
                 using var memoryst = new MemoryStream();
-                await file.CopyToAsync(memoryst);
+                await File.CopyToAsync(memoryst);
                 var movies = Encoding.ASCII.GetString(memoryst.ToArray());
                 listapeli = JsonSerializer.Deserialize<List<Movie>>(movies);
                 await Task.Run(() =>
@@ -147,35 +137,39 @@ namespace Api.Controllers
             {
                 return BadRequest(error.Message);
             }
-
-            //try
-            //{
-
-            //    foreach (var item in peli)
-            //    {
-            //        item.id = F.id;
-            //        F.Arbolb.Add(item);
-            //        F.id++;
-            //    }
-
-            //    return Ok();
-            //}
-            //catch (Exception error)
-            //{
-            //    return BadRequest(error.Message);
-            //}
+           
         }
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpPost("populate")] //para mandar text json
+        public async Task<ActionResult> Create([FromBody] List<Movie> peli)
         {
+            try
+            {
+                foreach (var item in peli)
+                {
+                    item.id = F.id;
+                    F.Arbolb.Add(item);
+                    F.id++;
+                }
 
-            F.Arbolb = new ArbolB<Movie>(F.tamaño, Movie.Compare_id);
-            F.id = 1;
-            return Ok();
+                return Ok();
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.Message);
+            }
         }
+
+        [HttpDelete]
+      public IActionResult Delete()
+      {
+
+          F.Arbolb = new ArbolB<Movie>(F.tamaño, Movie.Compare_id);
+          F.id = 1;
+          return Ok();
+      }
         // DELETE: api/Movies/5
         //[HttpDelete("{id}")]
-
-    }
+        
+    }   
 
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -41,7 +41,7 @@ namespace ArbolB
             }
             else
             {
-                postorder(root);
+               postorder(root);
             }
             return pre;
         }
@@ -75,7 +75,7 @@ namespace ArbolB
             {
                 return true;
             }
-            else if (root.IsEmpy())
+            else if (root.IsEmpy()) 
             {
                 return true;
             }
@@ -92,15 +92,15 @@ namespace ArbolB
             }
             else
             {
-                add2(dato, root, null);
+                add2(dato, root,null);
             }
-
+           
         }
         private void add2(T dato, Node<T> Actual, Node<T> AnteriorActual)
         {
             bool ciclo = false;
             find(dato, Actual);
-            if (ValorRepitodo != true)
+            if (ValorRepitodo!=true)
             {
                 if (Actual.tienehijos())
                 {
@@ -174,8 +174,8 @@ namespace ArbolB
                     }
                 }
             }
-
-
+           
+            
         }
         internal void partirraiz(ref Node<T> Left, ref Node<T> Right, ref Node<T> Actual, ref Node<T> Temp)
         {
@@ -192,14 +192,14 @@ namespace ArbolB
             AnteriorActual.AddValue(ValorEnMedio(Temp));
             AnteriorActual.nodosInternos[findpos(ValorEnMedio(Temp), AnteriorActual)].Left = Actual;
             AnteriorActual.nodosInternos[findpos(ValorEnMedio(Temp), AnteriorActual)].Right = Right;
-            if (!(AnteriorActual.IsFull() && findpos(ValorEnMedio(Temp), AnteriorActual) == n - 1))
+            if (!(AnteriorActual.IsFull() && findpos(ValorEnMedio(Temp), AnteriorActual)==n-1))
             {
                 if (AnteriorActual.nodosInternos[findpos(ValorEnMedio(Temp), AnteriorActual) + 1] != null)
                 {
                     AnteriorActual.nodosInternos[findpos(ValorEnMedio(Temp), AnteriorActual) + 1].Left = AnteriorActual.nodosInternos[findpos(ValorEnMedio(Temp), AnteriorActual)].Right;
                 }
             }
-
+           
         }
         internal T Divide(Node<T> arr, ref Node<T> left, ref Node<T> right)
         {
@@ -228,15 +228,15 @@ namespace ArbolB
             }
             return -1;
         }
-        private void find(T dato, Node<T> Actual)
+        private void find(T dato,Node<T> Actual)
         {
             ValorRepitodo = false;
             bool ciclo = false;
             if (Actual.tienehijos())
             {
-
+                
                 int i = 0;
-                while (Actual.nodosInternos[i] != null && ciclo != true)
+                while (Actual.nodosInternos[i] != null && ciclo!=true)
                 {
                     if (comparador.Invoke(dato, Actual.nodosInternos[i].Value) == 0)
                     {
@@ -255,11 +255,11 @@ namespace ArbolB
                     }
                     i++;
                 }
-
+                
             }
             else
             {
-                for (int x = 0; x < n - 1; x++)
+                for (int x=0;x< n-1;x++)
                 {
                     if (Actual.nodosInternos[x] != null)
                     {
@@ -268,11 +268,11 @@ namespace ArbolB
                             ValorRepitodo = true;
                         }
                     }
-
+                    
 
                 }
             }
-
+            
         }
         internal void recorridohoja(Node<T> Actual)
         {
@@ -361,14 +361,14 @@ namespace ArbolB
             {
                 return false;
             }
-
+            
         }
         private void Delete2(T value, Node<T> Actual, Node<T> Padreactual)
         {
-            int posicionpadre = 0;
+            int posicionpadre=0;
             for (int i = 0; i < Actual.valueslength(); i++)
             {
-                if (comparador.Invoke(value, Actual.nodosInternos[i].Value) == 0)
+                if (comparador.Invoke(value, Actual.nodosInternos[i].Value)==0)
                 {
                     posicionpadre = Buscarposicionpadre(Actual, Padreactual, i);
 
@@ -378,11 +378,11 @@ namespace ArbolB
                         Sucesor(Actual, Padreactual, i);
                         Actual.nodosInternos[i].Value = SucesorV;
                         Delete2(SucesorV, Actual.nodosInternos[i].Right, Actual);
-
+                        
                     }
                     else
                     {
-                        hijode = Actual.nodosInternos[i].Right;
+                       hijode = Actual.nodosInternos[i].Right;
                         Hijoiz = Actual.nodosInternos[i].Left;
                         if (Padreactual != null)
                         {
@@ -398,7 +398,7 @@ namespace ArbolB
                 else if (comparador.Invoke(value, Actual.nodosInternos[i].Value) == -1)
                 {
                     posicionpadre = Buscarposicionpadre(Actual, Padreactual, i);
-                    Delete2(value, Actual.nodosInternos[i].Left, Actual);
+                    Delete2(value, Actual.nodosInternos[i].Left,Actual);
                     i = n;
                 }
                 else if (Actual.nodosInternos[i + 1] == null)
@@ -412,13 +412,13 @@ namespace ArbolB
                 {
                     if (Padreactual != null)
                     {
-
+                        
                         if (!redistribucion(ref Actual, ref Padreactual, posicionpadre))
                         {
                             union(ref Actual, ref Padreactual, posicionpadre);
                         }
                     }
-
+                    
                 }
             }
         }
@@ -428,19 +428,19 @@ namespace ArbolB
             if (sucesorentra == false)
             {
                 sucesorentra = true;
-                Sucesor(Actual.nodosInternos[posicion].Right, Actual, posicion);
+                 Sucesor(Actual.nodosInternos[posicion].Right, Actual, posicion);
             }
             else if (Actual.nodosInternos[0].Left != null)
             {
-                Sucesor(Actual.nodosInternos[0].Left, Actual, posicion);
+                 Sucesor(Actual.nodosInternos[0].Left, Actual, posicion);
             }
             else
             {
-                SucesorV = Actual.nodosInternos[0].Value;
+               SucesorV= Actual.nodosInternos[0].Value;
             }
-
+            
         }
-        private Node<T> Unirnodos(Node<T> Hijo1, Node<T> Padre, Node<T> Hijo2, int posicionpadre, Node<T> nieto) // :D
+        private Node<T> Unirnodos(Node<T> Hijo1, Node<T> Padre, Node<T> Hijo2,int posicionpadre, Node<T> nieto) // :D
         {
             int x = 0;
             Node<T> Newnode = new Node<T>(n, comparador);
@@ -464,13 +464,13 @@ namespace ArbolB
                 {
                     Newnode.nodosInternos[x].Left = Newnode.nodosInternos[x - 1].Right; Newnode.nodosInternos[x].Right = nieto;
                 }
-
+                
             }
             else
             {
                 Newnode.nodosInternos[x].Left = Newnode.nodosInternos[x - 1].Right; Newnode.nodosInternos[x].Right = Newnode.nodosInternos[x + 1].Left;
             }
-
+           
             return Newnode;
         }
         private int Buscarposicionpadre(Node<T> Actual, Node<T> Padreactual, int posicion)
@@ -478,7 +478,7 @@ namespace ArbolB
             int posicionpadre = 0;
             if (!(Padreactual == null))
             {
-
+                
                 for (int i = 0; i < Padreactual.valueslength(); i++)
                 {
                     posicionpadre = i;
@@ -490,9 +490,9 @@ namespace ArbolB
             }
             return posicionpadre;
         }
-        internal void union(ref Node<T> Actual, ref Node<T> Padreactual, int posicionpadre)
+        internal void union(ref Node<T> Actual,ref Node<T> Padreactual, int posicionpadre)
         {
-            bool hijoderecho = false;
+            bool hijoderecho=false;
             if (Actual.valueslength() == 0)
             {
                 hijoderecho = (Padreactual.nodosInternos[posicionpadre].Right.valueslength() == 0);
@@ -501,16 +501,16 @@ namespace ArbolB
             {
                 hijoderecho = comparador.Invoke(Padreactual.nodosInternos[posicionpadre].Right.nodosInternos[0].Value, Actual.nodosInternos[0].Value) == 0;
             }
-            Node<T> NewNode = new Node<T>(n, comparador);
+            Node<T> NewNode= new Node<T>(n,comparador);
             if (Padreactual.nodosInternos[posicionpadre].Right != null && !(hijoderecho))
             {
-                NewNode = Unirnodos(Padreactual.nodosInternos[posicionpadre].Right, Padreactual, Actual, posicionpadre, hijode);
+                NewNode = Unirnodos(Padreactual.nodosInternos[posicionpadre].Right, Padreactual,Actual, posicionpadre, hijode) ;
             }
             else
             {
-                NewNode = Unirnodos(Padreactual.nodosInternos[posicionpadre].Left, Padreactual, Actual, posicionpadre, Hijoiz);
+                NewNode = Unirnodos(Padreactual.nodosInternos[posicionpadre].Left, Padreactual,Actual, posicionpadre, Hijoiz);
             }
-            if (Padreactual.valueslength() > 1)
+            if (Padreactual.valueslength()>1)
             {
                 if (posicionpadre == 0)
                 {
@@ -529,21 +529,21 @@ namespace ArbolB
             }
             else
             {
-
+                
                 Padreactual.nodosInternos[posicionpadre].Right = NewNode;
                 Padreactual.nodosInternos[posicionpadre].Left = NewNode;
                 hijode = Padreactual.nodosInternos[posicionpadre].Right;
                 Hijoiz = Padreactual.nodosInternos[posicionpadre].Left;
             }
-            Padreactual.eliminar2(posicionpadre, ref root);
+            Padreactual.eliminar2(posicionpadre,ref root);
         }
         internal bool redistribucion(ref Node<T> Actual, ref Node<T> Padreactual, int posicionpadre)
         {
             bool verificar = false;
             bool hijoderecho = false;
             bool hijoizquirdo = false;
-
-            bool cambio = false;
+           
+            bool cambio=false;
             if (Padreactual.valueslength() > 1)
             {
                 if (!(Padreactual.valueslength() - 1 == posicionpadre))
@@ -569,12 +569,10 @@ namespace ArbolB
             {
                 NodosInternos<T> Temp = new NodosInternos<T>();
                 Temp.Right = Padreactual.nodosInternos[posicionpadre].Right.nodosInternos[0].Left;
-                if (Actual.valueslength() == 0)
-                {
+                if (Actual.valueslength() == 0){
                     Temp.Left = Hijoiz;
                 }
-                else
-                {
+                else{
                     Temp.Left = Actual.nodosInternos[Actual.valueslength() - 1].Right;
                 }
                 Temp.Value = Padreactual.nodosInternos[posicionpadre].Value;
@@ -593,9 +591,9 @@ namespace ArbolB
                         posicionpadre = -1;
                     }
                 }
-                if (Padreactual.valueslength() > 1)
+                if (Padreactual.valueslength() > 1) 
                 {
-                    if (posicionpadre != 0)
+                    if (posicionpadre!=0)
                     {
                         if (!hijoderecho)
                         {

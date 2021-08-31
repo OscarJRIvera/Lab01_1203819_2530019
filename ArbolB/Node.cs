@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,8 +8,8 @@ namespace ArbolB
     {
         internal NodosInternos<T>[] nodosInternos;
         private ArbolB<T>.Comparador<T> comparador;
-
-
+        
+        
 
         public Node(int n, ArbolB<T>.Comparador<T> comparador)
         {
@@ -33,7 +33,7 @@ namespace ArbolB
             }
             else
             {
-                return false;
+               return false;
             }
         }
         public void AddValue(T value)
@@ -73,7 +73,7 @@ namespace ArbolB
         }
         internal void eliminar2(int posicion, ref Node<T> root)
         {
-            if (comparador.Invoke(nodosInternos[0].Value, root.nodosInternos[0].Value) == 0 && root.valueslength() == 1)
+            if (comparador.Invoke(nodosInternos[0].Value,root.nodosInternos[0].Value)==0 && root.valueslength()==1) 
             {
                 root = root.nodosInternos[0].Left;
             }
@@ -88,7 +88,7 @@ namespace ArbolB
                     posicion++;
                 }
             }
-
+          
 
         }
         public void AddValue2(NodosInternos<T> value)
@@ -97,7 +97,7 @@ namespace ArbolB
             {
                 nodosInternos[0] = new NodosInternos<T>();
                 nodosInternos[0] = value;
-
+              
             }
             else
             {
@@ -114,8 +114,8 @@ namespace ArbolB
         }
         public void CorrectOrder()
         {
-            int length = 0;
-            for (int x = 0; x < nodosInternos.Length; x++)
+            int length=0;
+            for (int x=0; x<nodosInternos.Length;x++)
             {
                 if (nodosInternos[length] != null)
                 {
@@ -124,11 +124,11 @@ namespace ArbolB
 
 
             }
-            for (int i = 0; i < length - 1; i++)
+            for (int i = 0; i < length - 1 ; i++)
             {
                 for (int j = i + 1; j < length; j++)
                 {
-                    if (comparador.Invoke(nodosInternos[i].Value, nodosInternos[j].Value) > 0)
+                    if(comparador.Invoke(nodosInternos[i].Value,nodosInternos[j].Value) > 0)
                     {
                         var t = nodosInternos[i];
                         nodosInternos[i] = nodosInternos[j];
@@ -143,7 +143,7 @@ namespace ArbolB
             {
                 if (item == null)
                 {
-                    return false;
+                    return false; 
                 }
             }
             return true;
