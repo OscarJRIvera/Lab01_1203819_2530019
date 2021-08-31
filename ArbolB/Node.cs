@@ -60,6 +60,37 @@ namespace ArbolB
 
             CorrectOrder();
         }
+        public void eliminar1(int posicion)
+        {
+            nodosInternos[posicion] = null;
+
+            while (posicion < nodosInternos.Length - 1)
+            {
+
+                nodosInternos[posicion] = nodosInternos[posicion + 1];
+                posicion++;
+            }
+        }
+        internal void eliminar2(int posicion, ref Node<T> root)
+        {
+            if (comparador.Invoke(nodosInternos[0].Value,root.nodosInternos[0].Value)==0 && root.valueslength()==1) 
+            {
+                root = root.nodosInternos[0].Left;
+            }
+            else
+            {
+                nodosInternos[posicion] = null;
+
+                while (posicion < nodosInternos.Length - 1)
+                {
+
+                    nodosInternos[posicion] = nodosInternos[posicion + 1];
+                    posicion++;
+                }
+            }
+          
+
+        }
         public void AddValue2(NodosInternos<T> value)
         {
             if (IsEmpy())

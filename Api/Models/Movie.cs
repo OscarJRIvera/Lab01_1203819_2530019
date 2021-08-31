@@ -25,9 +25,9 @@ namespace Api.Models
       
         public string Title { get; set; }
 
-        public static int Compare_Title(Movie x, Movie y)
+        public static int Compare_id(Movie x, Movie y)
         {
-            int r = x.Title.CompareTo(y.Title);
+            int r = x.id.CompareTo(y.id);
             return r;
         }
 
