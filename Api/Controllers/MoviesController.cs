@@ -96,6 +96,7 @@ namespace Api.Controllers
                 {
                     F.tamaño = Convert.ToInt32(n.order);
                     F.Arbolb = new ArbolB<Movie>(Convert.ToInt32(n.order), Movie.Compare_id);
+                    F.id=1;
                     return Created("", n);
                 }
                 else
