@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace Api.Models
 {
-    
- 
+
+
     public class Movie
     {
-       
+
         public int id { get; set; }
-        
+
         public string director { get; set; }
-      
+
         public double imdbrating { get; set; }
-       
+
         public string genre { get; set; }
-        
+
         public DateTime ReleaseDate { get; set; }
-      
+
         public int RottenTomatoesRating { get; set; }
-      
+
         public string Title { get; set; }
 
         public static int Compare_id(Movie x, Movie y)
@@ -33,9 +33,9 @@ namespace Api.Models
 
     }
 
-  
- 
 
-   
+
+
+
 
 }
